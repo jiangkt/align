@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv1"
+        android:layout_width="200dp"
+        android:background="@android:color/black"
+        app:text_size="15dp"
+        app:text_color="@color/colorAccent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv2"
+        android:layout_width="200dp"
+        android:background="@android:color/black"
+        android:layout_marginTop="10dp"
+        app:text_size="15dp"
+        app:text_color="@color/colorAccent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv3"
+        android:layout_width="200dp"
+        android:layout_marginTop="10dp"
+        app:text_size="15dp"
+        app:text_color="@color/colorAccent"
+        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv2"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv4"
+        android:layout_width="200dp"
+        app:text_size="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black"
+        app:text_color="@color/colorAccent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv3"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv5"
+        android:layout_width="200dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:text_size="15dp"
+        android:layout_marginTop="10dp"
+        app:text_color="@color/colorAccent"
+        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv4"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv6"
+        android:layout_width="200dp"
+        app:text_size="15dp"
+        android:layout_marginTop="10dp"
+        app:text_color="@color/colorAccent"
+        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv5"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv7"
+        android:layout_width="200dp"
+        app:text_size="15dp"
+        android:layout_marginTop="10dp"
+        app:text_color="@color/colorAccent"
+        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv6"
+        app:layout_constraintLeft_toLeftOf="parent" />
+    <com.atu.aligntext.AlignTextView
+        android:id="@+id/atv8"
+        android:layout_width="200dp"
+        app:text_size="15dp"
+        android:layout_marginTop="10dp"
+        app:text_color="@color/colorAccent"
+        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/atv7"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
