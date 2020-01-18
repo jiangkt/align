@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         atv1.setText("我");
         atv2.setText("我国");
         atv3.setText("我爱国");
-        atv4.setText("我爱你国");
+        atv4.setText("我爱中国");
         atv5.setText("我爱你中国");
         atv6.setText("我只爱你中国");
         atv7.setText("我永远爱你中国");
-        atv8.setText("我会永远爱你中国");
+        atv8.setText("我只永远爱你中国");
     }
 }

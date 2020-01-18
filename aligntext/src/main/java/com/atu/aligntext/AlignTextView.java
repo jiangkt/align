@@ -6,7 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 
 public class AlignTextView extends View {
     private float textSize;
+    private String textColon;
     private @ColorInt
     int textColor;
     private Paint textPaint;
@@ -21,29 +24,55 @@ public class AlignTextView extends View {
     private String text;
     private Rect[] rects;
     private String[] singleTexts;
-    private int textLenght;
-    private int textBoundsLenght;
+    private int textLength;
+    private float textBoundsLength = 0;
+    private float textColonBoundsLength = 0;
 
     private Paint.FontMetrics fontMetrics;
     private float textBaseLineY;
-    private int space;
+    private float space;
+    private float colonPaddingLeft;
+    private float colonPaddingRight;
+    private int alignStyle;
 
-    public void setText(String text) {
+    public void setText(@Nullable String text) {
         this.text = text;
-        textPosition();
+        textRect();
     }
 
-    private void textPosition() {
+    public void setTextColon(@Nullable String textColon) {
+        this.textColon = textColon;
+        textColonRect();
+    }
 
-        textLenght = text.length();
-        rects = new Rect[textLenght];
-        singleTexts = new String[textLenght];
-        for (int i = 0; i < textLenght; i++) {
+    private void textColonRect() {
+        if (TextUtils.isEmpty(textColon)) {
+            return;
+        }
+
+        textColon = textColon.trim();
+        textColonBoundsLength = 0;
+        Rect rect = new Rect();
+        textPaint.getTextBounds(textColon, 0, textColon.length(), rect);
+        textColonBoundsLength = rect.width();
+    }
+
+    private void textRect() {
+        if (TextUtils.isEmpty(text)) {
+            return;
+        }
+
+        text = text.trim();
+        textLength = text.length();
+        rects = new Rect[textLength];
+        singleTexts = new String[textLength];
+        textBoundsLength = 0;
+        for (int i = 0; i < textLength; i++) {
             singleTexts[i] = String.valueOf(text.charAt(i));
             Rect bounds = new Rect();
             textPaint.getTextBounds(singleTexts[i], 0, singleTexts[i].length(), bounds);
             rects[i] = bounds;
-            textBoundsLenght += rects[i].width();
+            textBoundsLength += rects[i].width();
         }
 
         invalidate();
@@ -61,6 +90,8 @@ public class AlignTextView extends View {
         super(context, attrs, defStyleAttr);
         obtainAttributes(context, attrs);
         init();
+        textRect();
+        textColonRect();
     }
 
     private void obtainAttributes(Context context, AttributeSet attrs) {
@@ -68,6 +99,11 @@ public class AlignTextView extends View {
 
         textSize = ta.getDimension(R.styleable.AlignTextView_text_size, 0);
         textColor = ta.getColor(R.styleable.AlignTextView_text_color, Color.parseColor("#000000"));
+        textColon = ta.getString(R.styleable.AlignTextView_text_colon);
+        text = ta.getString(R.styleable.AlignTextView_text);
+        colonPaddingLeft = ta.getDimension(R.styleable.AlignTextView_colon_padding_left, 0);
+        colonPaddingRight = ta.getDimension(R.styleable.AlignTextView_colon_padding_right, 0);
+        alignStyle = ta.getInt(R.styleable.AlignTextView_align_style, 0);
 
         ta.recycle();
     }
@@ -95,33 +131,54 @@ public class AlignTextView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int paddingTop = getPaddingTop();
-        int paddingBottom = getPaddingBottom();
+        float paddingBottom = getPaddingBottom();
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), (int) (fontMetrics.descent + textBaseLineY + paddingBottom));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int textLeft = getPaddingLeft();
-        if (textLenght > 0) {
-            if (textLenght == 1){
-                canvas.drawText(singleTexts[0], getWidth() / 2 , textBaseLineY, textPaint);
+        float paddingLeft = getPaddingLeft();
+        float paddingRight = getPaddingRight();
+        float textWidth = getWidth() - paddingLeft - paddingRight - textColonBoundsLength - colonPaddingLeft - colonPaddingRight;
+
+        canvas.drawText(textColon, textColonBoundsLength / 2 + getWidth() - paddingRight - textColonBoundsLength - colonPaddingRight, textBaseLineY, textPaint);
+
+        float curWidth = 0;
+        if (textLength > 0) {
+            if (textLength == 1) {
+                canvas.drawText(singleTexts[0], textWidth / 2, textBaseLineY, textPaint);
                 return;
             }
+            textWidth -= textBoundsLength;
 
-            int paddingLeft = getPaddingLeft();
-            int paddingRight = getPaddingRight();
-            space = (getWidth() - textBoundsLenght - paddingLeft - paddingRight) / (textLenght - 1);
-        }
-        for (int i = 0; i < textLenght; i++) {
-            if (i > 0) {
-                lastTextHalfWidth += rects[i - 1].width();
+            if (alignStyle == 1) {
+                space = textWidth / (textLength + 1);
+                curWidth += space;
+            } else {
+                curWidth = 0;
+                space = textWidth / (textLength - 1);
             }
-            float boundHalfWidth = rects[i].width() / 2F;
-            float curx = textLeft + boundHalfWidth + (i * space) + lastTextHalfWidth;
-            canvas.drawText(singleTexts[i], curx, textBaseLineY, textPaint);
         }
+
+        curWidth += paddingLeft;
+        Log.i("align_开始", "**************************");
+        Log.i("align_getWidth", getWidth() + "");
+        Log.i("align_textBoundsLength", textBoundsLength + "");
+        Log.i("align_textColonLength", textColonBoundsLength + "");
+        Log.i("align_paddingLeft", paddingLeft + "");
+        Log.i("align_paddingRight", paddingRight + "");
+        Log.i("align_textWidth", textWidth + "");
+        Log.i("align_space", space + "");
+
+        for (int i = 0; i < textLength; i++) {
+            curWidth += rects[i].width() / 2;
+
+            Log.i("align_curWidth", curWidth + "");
+            canvas.drawText(singleTexts[i], curWidth, textBaseLineY, textPaint);
+            curWidth += rects[i].width() / 2;
+            curWidth += space;
+        }
+        Log.i("align_结束", "--------------------------");
     }
 
-    int lastTextHalfWidth = 0;
 }
