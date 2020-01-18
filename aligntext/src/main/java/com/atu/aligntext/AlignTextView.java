@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
@@ -89,7 +88,7 @@ public class AlignTextView extends View {
     public AlignTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         obtainAttributes(context, attrs);
-        init();
+        initPaint();
         textRect();
         textColonRect();
     }
@@ -110,13 +109,17 @@ public class AlignTextView extends View {
 
     public void setTextSize(float textSize) {
         this.textSize = textSize;
+        initPaint();
+        invalidate();
     }
 
     public void setTextColor(int textColor) {
         this.textColor = textColor;
+        initPaint();
+        invalidate();
     }
 
-    private void init() {
+    private void initPaint() {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(textColor);
         textPaint.setTextSize(textSize);
@@ -161,24 +164,14 @@ public class AlignTextView extends View {
         }
 
         curWidth += paddingLeft;
-        Log.i("align_开始", "**************************");
-        Log.i("align_getWidth", getWidth() + "");
-        Log.i("align_textBoundsLength", textBoundsLength + "");
-        Log.i("align_textColonLength", textColonBoundsLength + "");
-        Log.i("align_paddingLeft", paddingLeft + "");
-        Log.i("align_paddingRight", paddingRight + "");
-        Log.i("align_textWidth", textWidth + "");
-        Log.i("align_space", space + "");
 
         for (int i = 0; i < textLength; i++) {
             curWidth += rects[i].width() / 2;
 
-            Log.i("align_curWidth", curWidth + "");
             canvas.drawText(singleTexts[i], curWidth, textBaseLineY, textPaint);
             curWidth += rects[i].width() / 2;
             curWidth += space;
         }
-        Log.i("align_结束", "--------------------------");
     }
 
 }
