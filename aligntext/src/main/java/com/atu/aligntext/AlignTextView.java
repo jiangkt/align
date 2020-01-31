@@ -37,11 +37,13 @@ public class AlignTextView extends View {
     public void setText(@Nullable String text) {
         this.text = text;
         textRect();
+        invalidate();
     }
 
     public void setTextColon(@Nullable String textColon) {
         this.textColon = textColon;
         textColonRect();
+        invalidate();
     }
 
     private void textColonRect() {
@@ -73,8 +75,6 @@ public class AlignTextView extends View {
             rects[i] = bounds;
             textBoundsLength += rects[i].width();
         }
-
-        invalidate();
     }
 
     public AlignTextView(Context context) {
@@ -127,7 +127,6 @@ public class AlignTextView extends View {
 
         fontMetrics = textPaint.getFontMetrics();
         textBaseLineY = -fontMetrics.ascent + getPaddingTop();
-
     }
 
 
@@ -142,34 +141,35 @@ public class AlignTextView extends View {
     protected void onDraw(Canvas canvas) {
         float paddingLeft = getPaddingLeft();
         float paddingRight = getPaddingRight();
-        float textWidth = getWidth() - paddingLeft - paddingRight - textColonBoundsLength - colonPaddingLeft - colonPaddingRight;
+        float spaceWidth = getWidth() - paddingLeft - paddingRight;
 
-        canvas.drawText(textColon, textColonBoundsLength / 2 + getWidth() - paddingRight - textColonBoundsLength - colonPaddingRight, textBaseLineY, textPaint);
+        if (!TextUtils.isEmpty(textColon)){
+            canvas.drawText(textColon, textColonBoundsLength / 2 + getWidth() - paddingRight - textColonBoundsLength - colonPaddingRight, textBaseLineY, textPaint);
+            spaceWidth -= (textColonBoundsLength + colonPaddingLeft + colonPaddingRight);
+        }
 
         float curWidth = 0;
         if (textLength > 0) {
             if (textLength == 1) {
-                canvas.drawText(singleTexts[0], textWidth / 2, textBaseLineY, textPaint);
+                canvas.drawText(singleTexts[0], spaceWidth / 2, textBaseLineY, textPaint);
                 return;
             }
-            textWidth -= textBoundsLength;
 
+            spaceWidth -= textBoundsLength;
+            curWidth += paddingLeft;
             if (alignStyle == 1) {
-                space = textWidth / (textLength + 1);
+                space = spaceWidth / (textLength + 1);
                 curWidth += space;
             } else {
-                curWidth = 0;
-                space = textWidth / (textLength - 1);
+                space = spaceWidth / (textLength - 1);
             }
         }
 
-        curWidth += paddingLeft;
-
         for (int i = 0; i < textLength; i++) {
-            curWidth += rects[i].width() / 2;
+            curWidth += rects[i].width() / 2.0F;
 
             canvas.drawText(singleTexts[i], curWidth, textBaseLineY, textPaint);
-            curWidth += rects[i].width() / 2;
+            curWidth += rects[i].width() / 2.0F;
             curWidth += space;
         }
     }
