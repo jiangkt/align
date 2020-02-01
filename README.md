@@ -9,3 +9,6 @@
 ## 项目地址
 
 [github项目地址](https://github.com/jiangkt/align)
+## 使用gradle依赖
+
+``` implementation 'com.github.jiangkt:align:1.0.0'```
