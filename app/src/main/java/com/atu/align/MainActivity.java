@@ -3,6 +3,8 @@ package com.atu.align;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.atu.aligntext.AlignTextView;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private AlignTextView atv6;
     private AlignTextView atv7;
     private AlignTextView atv8;
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         atv6 = findViewById(R.id.atv6);
         atv7 = findViewById(R.id.atv7);
         atv8 = findViewById(R.id.atv8);
+        atv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i("点击坐标", v.getWidth() + "," + v.getHeight());
+                Log.i("点击", i++ + "");
+            }
+        });
 
         atv1.setText("我");
         atv2.setText("我国");

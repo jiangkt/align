@@ -13,7 +13,6 @@
         app:colon_padding_left="2dp"
         app:colon_padding_right="4dp"
         app:text_size="15dp"
-        app:text_color="@color/colorAccent"
         app:text_colon=":"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,7 +26,6 @@
         app:colon_padding_left="2dp"
         app:align_style="spread"
         app:colon_padding_right="4dp"
-        app:text_color="@color/colorAccent"
         app:text_colon=":"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/atv1"
@@ -39,7 +37,6 @@
         app:text_colon=":"
         app:text_size="15dp"
         app:align_style="spread"
-        app:text_color="@color/colorAccent"
         android:background="@android:color/black"
         app:colon_padding_left="2dp"
         app:colon_padding_right="4dp"
@@ -55,7 +52,6 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/black"
         app:text_colon=":"
-        app:text_color="@color/colorAccent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/atv3"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -70,7 +66,6 @@
         app:colon_padding_right="4dp"
         app:text_size="15dp"
         android:layout_marginTop="10dp"
-        app:text_color="@color/colorAccent"
         android:background="@android:color/black"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/atv4"
@@ -83,7 +78,6 @@
         app:colon_padding_left="2dp"
         app:colon_padding_right="4dp"
         app:text_colon=":"
-        app:text_color="@color/colorAccent"
         android:background="@android:color/black"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/atv5"
@@ -93,7 +87,6 @@
         android:layout_width="250dp"
         app:text_size="15dp"
         android:layout_marginTop="10dp"
-        app:text_color="@color/colorAccent"
         app:text_colon=":"
         app:colon_padding_left="2dp"
         app:colon_padding_right="4dp"
@@ -110,10 +103,16 @@
         app:text_size="15dp"
         android:layout_marginTop="10dp"
         app:align_style="spread"
-        app:text_color="@color/colorAccent"
         android:background="@android:color/black"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/atv7"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

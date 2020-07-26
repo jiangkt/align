@@ -97,7 +97,7 @@ public class AlignTextView extends View {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AlignTextView);
 
         textSize = ta.getDimension(R.styleable.AlignTextView_text_size, 0);
-        textColor = ta.getColor(R.styleable.AlignTextView_text_color, Color.parseColor("#000000"));
+        textColor = ta.getColor(R.styleable.AlignTextView_text_color, Color.parseColor("#333333"));
         textColon = ta.getString(R.styleable.AlignTextView_text_colon);
         text = ta.getString(R.styleable.AlignTextView_text);
         colonPaddingLeft = ta.getDimension(R.styleable.AlignTextView_colon_padding_left, 0);
